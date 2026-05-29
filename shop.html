@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shop — MTL Lavage</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>MTL Lavage</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#services">Services</a>
+        <a href="shop.html">Shop</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Shop — Detailing Products</h2>
+    <p>High-quality products we use and recommend.</p>
+
+    <div class="products-grid" id="products">
+      <!-- Products populated by script.js -->
+    </div>
+
+    <div id="cart" class="cart">
+      <h3>Cart</h3>
+      <div id="cart-items"></div>
+      <div class="cart-footer">
+        <strong>Total: $<span id="cart-total">0</span></strong>
+        <button id="checkout" class="btn">Checkout</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© MTL Lavage — Shop</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
