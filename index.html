@@ -13,8 +13,8 @@
   <div class="water-bubbles"></div>
   <div class="mission-box">
     <p class="eyebrow">MTLLAVAGE PRESENTS</p>
-    <h1>MISSION: CLEAN THE CITY</h1>
-    <p class="typing">Foam. Shine. Detail. Protect.</p>
+    <h1>MISSION: FIX THE CITY</h1>
+    <p class="typing">Jump potholes. Clean cars. Fix the city.</p>
     <button id="skipIntro" class="btn ghost">Skip Intro</button>
   </div>
 </div>
@@ -39,6 +39,23 @@
 </header>
 
 <main>
+
+  <section id="game" class="section game-section">
+    <p class="tag">Mini Game</p>
+    <h2>MTLLavage Car Jump</h2>
+    <p>Press <strong>Space</strong> or tap the game area to jump over the potholes. Score only when the car clears the pothole.</p>
+
+    <div id="gameArea" class="game-area" tabindex="0" aria-label="Car jump game. Press space to jump.">
+      <div class="sunset-glow"></div>
+      <div class="pothole-track"></div>
+      <div class="road-line"></div>
+      <div id="gameCar" class="game-car">🚗</div>
+      <div id="hurdle" class="pothole"></div>
+      <div id="score" class="score">Score: 0</div>
+      <div id="gameHint" class="game-hint">Press SPACE before pothole</div>
+    </div>
+  </section>
+
   <section id="home" class="hero">
     <div class="foam-bg"></div>
     <div class="hero-content">
@@ -62,21 +79,6 @@
     </div>
   </section>
 
-  <section id="game" class="section game-section">
-    <p class="tag">Mini Game</p>
-    <h2>MTLLavage Car Jump</h2>
-    <p>Press <strong>Space</strong> or tap the game area to jump over the hurdles. The car now drives forward across a Montreal-style city silhouette.</p>
-
-    <div id="gameArea" class="game-area" tabindex="0" aria-label="Car jump game. Press space to jump.">
-      <div class="sunset-glow"></div>
-      <div class="city-silhouette"></div>
-      <div class="road-line"></div>
-      <div id="gameCar" class="game-car">🚗</div>
-      <div id="hurdle" class="hurdle"></div>
-      <div id="score" class="score">Score: 0</div>
-      <div id="gameHint" class="game-hint">Press SPACE to jump</div>
-    </div>
-  </section>
 
   <section id="missions" class="section">
     <p class="tag">Choose Your Package</p>
@@ -149,7 +151,6 @@
 
   <section id="contact" class="section contact">
     <h2>Contact MTLLavage</h2>
-    <p>📞 <a href="tel:+15146095550">514-609-5550</a></p>
     <p>✉️ <a href="mailto:info@mtllavage.com">info@mtllavage.com</a></p>
     <p>🌐 www.mtllavage.com</p>
   </section>

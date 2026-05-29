@@ -14,3 +14,12 @@ Settings > Pages > Branch: main > Folder: root.
 
 ## Customize
 Replace generated images in /assets with real client photos whenever ready.
+
+
+## Level 5 changes
+- Front mission title changed to MISSION: FIX THE CITY.
+- Logo/title font and style updated.
+- Mini game moved to the top of the page.
+- Buildings replaced with pothole road visuals.
+- Car scores by jumping potholes; falling into pothole shows “OUCH!” and resets score/pointer.
+- Phone number removed from the website.

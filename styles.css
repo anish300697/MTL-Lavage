@@ -478,3 +478,106 @@ footer {
   .grid, .gallery, .form-row, .shop-grid { grid-template-columns: 1fr; }
   .game-hint { display: none; }
 }
+
+
+/* LEVEL 5: Fix The City title + logo refresh */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Russo+One&display=swap');
+
+.brand-logo {
+  gap: 16px;
+}
+
+.logo-icon {
+  width: 66px;
+  height: 66px;
+  border-radius: 22px;
+  font-size: 38px;
+  background: linear-gradient(135deg, #ffffff 0%, #dffbff 35%, #00cfe8 100%);
+  border: 3px solid rgba(255,255,255,.7);
+}
+
+.logo-text strong {
+  font-family: 'Russo One', Arial, sans-serif;
+  font-size: clamp(1.95rem, 3.4vw, 2.95rem);
+  letter-spacing: 2px;
+  transform: skew(-7deg);
+  display: inline-block;
+}
+
+.hero h1,
+.mission-box h1,
+.game-section h2 {
+  font-family: 'Bangers', Impact, Arial, sans-serif;
+  letter-spacing: 2px;
+  font-weight: 400;
+  text-shadow: 0 4px 0 rgba(0,0,0,.35), 0 0 22px rgba(0,207,232,.65);
+}
+
+.mission-box h1 {
+  color: #ffffff;
+  font-size: clamp(3rem, 8vw, 6rem);
+}
+
+/* Game moved to very top */
+main > .game-section:first-child {
+  padding-top: 36px;
+  border-bottom: 1px solid rgba(233,251,255,.18);
+}
+
+/* Replace city buildings with pothole road track */
+.pothole-track {
+  position: absolute;
+  left: 0;
+  bottom: 72px;
+  width: 240%;
+  height: 60px;
+  background:
+    radial-gradient(ellipse at 12% 70%, rgba(0,0,0,.65) 0 18px, transparent 19px),
+    radial-gradient(ellipse at 34% 68%, rgba(0,0,0,.55) 0 14px, transparent 15px),
+    radial-gradient(ellipse at 58% 72%, rgba(0,0,0,.62) 0 20px, transparent 21px),
+    radial-gradient(ellipse at 81% 70%, rgba(0,0,0,.55) 0 15px, transparent 16px);
+  animation: cityMove 9s linear infinite;
+  opacity: .9;
+}
+
+.city-silhouette {
+  display: none;
+}
+
+.pothole {
+  position: absolute;
+  right: -90px;
+  bottom: 75px;
+  width: 72px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #000 0 45%, #1d1d1d 55%, #5c5c5c 100%);
+  border: 3px solid rgba(255,255,255,.35);
+  box-shadow: inset 0 7px 10px rgba(0,0,0,.85), 0 0 10px rgba(0,0,0,.5);
+  animation: hurdleMove 2.15s linear infinite;
+  z-index: 4;
+}
+
+.hurdle {
+  display: none;
+}
+
+.ouch-text {
+  position: absolute;
+  left: 128px;
+  bottom: 150px;
+  z-index: 8;
+  font-family: 'Bangers', Impact, Arial, sans-serif;
+  font-size: 54px;
+  color: #ff3d3d;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 0 #000, 0 0 14px #fff;
+  animation: ouchPop .7s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes ouchPop {
+  0% { transform: scale(.4) rotate(-10deg); opacity: 0; }
+  30% { transform: scale(1.25) rotate(5deg); opacity: 1; }
+  100% { transform: scale(.9) translateY(-30px); opacity: 0; }
+}

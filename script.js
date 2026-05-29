@@ -37,14 +37,14 @@ Service: ${service}
 Request: ${message}
 
 Next step:
-Copy this message and send it to info@mtllavage.com or call 514-609-5550.`;
+Copy this message and send it to info@mtllavage.com .`;
 
     output.textContent = bookingText;
     output.style.display = "block";
   });
 }
 
-/* MTLLavage car jump mini-game */
+/* MTLLavage pothole jump mini-game */
 const gameArea = document.getElementById("gameArea");
 const gameCar = document.getElementById("gameCar");
 const hurdle = document.getElementById("hurdle");
@@ -80,6 +80,20 @@ if (gameArea) {
   }, { passive: false });
 }
 
+
+function showOuch() {
+  if (!gameArea) return;
+  const old = gameArea.querySelector(".ouch-text");
+  if (old) old.remove();
+
+  const ouch = document.createElement("div");
+  ouch.className = "ouch-text";
+  ouch.textContent = "OUCH!";
+  gameArea.appendChild(ouch);
+
+  setTimeout(() => ouch.remove(), 800);
+}
+
 function gameLoop() {
   if (!gameCar || !hurdle || !scoreBox) return;
 
@@ -94,11 +108,18 @@ function gameLoop() {
 
   if (overlap && !gameOverCooldown) {
     gameOverCooldown = true;
-    scoreBox.textContent = "Oops! Score reset";
+    scoreBox.textContent = "OUCH! Score reset";
+    showOuch();
+
+    // Restart pothole pointer/animation from the beginning
+    hurdle.style.animation = "none";
+    void hurdle.offsetWidth;
+    hurdle.style.animation = "";
+
     setTimeout(() => {
       resetScore();
       gameOverCooldown = false;
-    }, 700);
+    }, 850);
   }
 
   const hurdleX = hurdleRect.left;
