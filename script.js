@@ -133,3 +133,17 @@ function gameLoop() {
 }
 
 gameLoop();
+
+
+function hideMobileHint(){
+  const hint=document.getElementById('mobileJumpHint');
+  if(hint){hint.style.display='none';}
+}
+
+document.addEventListener('keydown',(e)=>{
+  if(e.code==='Space'){hideMobileHint();}
+});
+
+if(gameArea){
+  gameArea.addEventListener('click',hideMobileHint);
+}

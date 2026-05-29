@@ -581,3 +581,51 @@ main > .game-section:first-child {
   30% { transform: scale(1.25) rotate(5deg); opacity: 1; }
   100% { transform: scale(.9) translateY(-30px); opacity: 0; }
 }
+
+
+/* Level 6 mobile gameplay improvements */
+.pothole{
+  width:45px !important;
+  height:16px !important;
+  animation:hurdleMove 2.6s linear infinite !important;
+}
+
+@keyframes jump{
+  0%,100%{bottom:73px;}
+  45%{bottom:170px;}
+}
+
+.mobile-jump-hint{
+  position:absolute;
+  bottom:120px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,.65);
+  color:#fff;
+  padding:10px 18px;
+  border-radius:999px;
+  font-weight:bold;
+  z-index:10;
+  animation:pulseHint 1.5s infinite;
+}
+
+@keyframes pulseHint{
+  0%{opacity:.5;}
+  50%{opacity:1;}
+  100%{opacity:.5;}
+}
+
+@media (max-width:768px){
+  .pothole{
+    width:38px !important;
+    height:14px !important;
+    animation:hurdleMove 3s linear infinite !important;
+  }
+  .game-car{
+    font-size:48px;
+  }
+}
+
+@media (min-width:769px){
+  .mobile-jump-hint{display:none;}
+}
