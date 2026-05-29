@@ -629,3 +629,69 @@ main > .game-section:first-child {
 @media (min-width:769px){
   .mobile-jump-hint{display:none;}
 }
+
+
+/* Level 7 mini-game music button */
+.music-toggle {
+  position: absolute;
+  top: 58px;
+  right: 18px;
+  z-index: 12;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 13px;
+  background: rgba(255,255,255,.78);
+  color: #00202b;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(0,207,232,.28);
+}
+
+.music-toggle:hover {
+  transform: scale(1.04);
+}
+
+@media (max-width: 768px) {
+  .music-toggle {
+    top: 14px;
+    right: 14px;
+  }
+}
+
+
+/* Level 8: softer game + easier mobile jump */
+.pothole {
+  width: 34px !important;
+  height: 12px !important;
+  animation: hurdleMove 3.05s linear infinite !important;
+}
+
+.game-car.jump {
+  animation: jumpEasy .82s ease-out !important;
+}
+
+@keyframes jumpEasy {
+  0%, 100% { bottom: 73px; }
+  40%, 58% { bottom: 190px; }
+}
+
+@media (max-width: 768px) {
+  .pothole {
+    width: 28px !important;
+    height: 10px !important;
+    animation: hurdleMove 3.65s linear infinite !important;
+  }
+
+  .game-car {
+    font-size: 46px !important;
+  }
+
+  .game-car.jump {
+    animation: jumpEasyMobile .95s ease-out !important;
+  }
+
+  @keyframes jumpEasyMobile {
+    0%, 100% { bottom: 73px; }
+    36%, 64% { bottom: 205px; }
+  }
+}

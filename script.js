@@ -110,6 +110,7 @@ function gameLoop() {
     gameOverCooldown = true;
     scoreBox.textContent = "OUCH! Score reset";
     showOuch();
+    playPotholeHitSound();
 
     // Restart pothole pointer/animation from the beginning
     hurdle.style.animation = "none";
@@ -146,4 +147,67 @@ document.addEventListener('keydown',(e)=>{
 
 if(gameArea){
   gameArea.addEventListener('click',hideMobileHint);
+}
+
+
+/* Level 7 mini-game music */
+const minigameMusic = document.getElementById("minigameMusic");
+const musicToggle = document.getElementById("musicToggle");
+let musicStarted = false;
+let musicMuted = true;
+
+function startGameMusic() {
+  if (!minigameMusic || musicMuted) return;
+  minigameMusic.volume = 0.10;
+  minigameMusic.play().then(() => {
+    musicStarted = true;
+  }).catch(() => {});
+}
+
+function toggleMusic() {
+  if (!minigameMusic || !musicToggle) return;
+
+  musicMuted = !musicMuted;
+  minigameMusic.muted = musicMuted;
+
+  if (musicMuted) {
+    minigameMusic.pause();
+    musicStarted = false;
+    musicToggle.textContent = "🔇 Music";
+  } else {
+    musicToggle.textContent = "🔊 Music";
+    startGameMusic();
+  }
+}
+
+if (musicToggle) {
+  musicToggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleMusic();
+  });
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.code === "Space" && minigameMusic && !musicMuted && !musicStarted) {
+    startGameMusic();
+  }
+});
+
+if (gameArea) {
+  gameArea.addEventListener("click", () => {
+    if (minigameMusic && !musicMuted && !musicStarted) {
+      startGameMusic();
+    }
+  });
+}
+
+
+/* Level 8 pothole hit sound */
+const potholeHitSound = document.getElementById("potholeHitSound");
+
+function playPotholeHitSound() {
+  if (!potholeHitSound) return;
+  potholeHitSound.volume = 0.45;
+  potholeHitSound.currentTime = 0;
+  potholeHitSound.play().catch(() => {});
 }

@@ -23,3 +23,17 @@ Replace generated images in /assets with real client photos whenever ready.
 - Buildings replaced with pothole road visuals.
 - Car scores by jumping potholes; falling into pothole shows “OUCH!” and resets score/pointer.
 - Phone number removed from the website.
+
+
+## Level 7 music update
+- Added lightweight loopable mini-game music: assets/minigame-music.wav
+- Added a Music toggle button inside the mini-game.
+- Music starts only after user interaction to comply with browser autoplay rules.
+
+
+## Level 8 update
+- Replaced mini-game music with a softer original no-copyright loop.
+- Added original pothole-hit sound effect.
+- Reduced music volume.
+- Made potholes smaller.
+- Made jump higher, longer, and easier for mobile players.
