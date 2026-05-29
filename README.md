@@ -1,23 +1,16 @@
-# MTL Lavage — Static Website
+# MTLLavage Level 4 Car Wash Theme + Mini Game
 
-This is a simple static website for the Montreal-based car washing and detailing business `MTL Lavage`.
+## Updates included
+1. Bigger, more stylish MTLLavage logo.
+2. Car wash/detailing friendly aqua, foam, blue and mint theme.
+3. Main game car drives forward.
+4. City silhouette track added with Space-key jump game.
+5. Generated Before, After and Interior gallery images.
+6. Generated product images for the Shop tab.
 
-Quick start:
+## Deploy
+Upload all files to GitHub and enable GitHub Pages:
+Settings > Pages > Branch: main > Folder: root.
 
-1. Open `index.html` in a browser (double-click or serve via a static server).
-
-Local server example (Python 3):
-```bash
-python -m http.server 8000
-# then open http://localhost:8000/index.html
-```
-
-What is included:
-- `index.html` — Landing page with services, rate card and gallery
-- `shop.html` — Product listings and simple cart
-- `styles.css` — Site styles
-- `script.js` — Shop/cart behavior
-
-Notes:
-- Images use Unsplash CDN links as placeholders. Replace with your own photos in production.
-- Checkout is a demo; integrate a payment provider for real sales.
+## Customize
+Replace generated images in /assets with real client photos whenever ready.

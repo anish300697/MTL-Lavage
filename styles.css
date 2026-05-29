@@ -1,27 +1,480 @@
-:root{--accent:#1f6feb;--muted:#666}
-*{box-sizing:border-box}
-body{font-family:Inter,Segoe UI,Arial,sans-serif;margin:0;color:#222}
-.container{max-width:1100px;margin:0 auto;padding:20px}
-.site-header{background:#111;color:#fff}
-.site-header .container{display:flex;align-items:center;justify-content:space-between}
-.site-header nav a{color:#fff;margin-left:16px;text-decoration:none}
-.hero{padding:40px 0;text-align:center}
-.btn{background:var(--accent);color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-.service-card{border:1px solid #eee;padding:12px;border-radius:8px}
-.price{font-weight:700;margin-top:8px}
-.rate-card{width:100%;border-collapse:collapse;margin-top:12px}
-.rate-card th,.rate-card td{border:1px solid #eee;padding:8px;text-align:left}
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:12px}
-.gallery-grid img{width:100%;height:160px;object-fit:cover;border-radius:6px}
-.site-footer{background:#f7f7f7;padding:16px;text-align:center;margin-top:24px}
+:root {
+  --navy: #061b2b;
+  --deep: #021018;
+  --aqua: #00cfe8;
+  --blue: #087dff;
+  --foam: #e9fbff;
+  --mint: #72f5d1;
+  --sun: #ffe08a;
+  --panel: rgba(255, 255, 255, 0.12);
+  --text: #ffffff;
+  --muted: #c9e7ee;
+}
 
-.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:12px}
-.product{border:1px solid #e6e6e6;padding:12px;border-radius:8px}
-.product img{width:100%;height:140px;object-fit:cover;border-radius:6px}
-.cart{position:fixed;right:20px;top:100px;width:260px;background:#fff;border:1px solid #ddd;padding:12px;border-radius:8px}
-.cart-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+* { box-sizing: border-box; }
 
-@media(max-width:700px){.cart{position:static;width:auto;margin-top:20px}}
+html { scroll-behavior: smooth; }
 
-.price-tag{font-weight:700;color:var(--accent)}
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 18% 10%, rgba(0,207,232,.22), transparent 32%),
+    radial-gradient(circle at 85% 18%, rgba(114,245,209,.16), transparent 38%),
+    linear-gradient(180deg, var(--navy), var(--deep));
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+a { color: var(--foam); }
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 6%;
+  background: rgba(2, 16, 24, .82);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(233,251,255,.22);
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  transform: scale(1.08);
+  transform-origin: left center;
+}
+
+.logo-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  font-size: 32px;
+  background: linear-gradient(135deg, var(--aqua), var(--blue));
+  box-shadow: 0 0 22px rgba(0,207,232,.55), inset 0 0 18px rgba(255,255,255,.35);
+}
+
+.logo-text strong {
+  display: block;
+  font-size: clamp(1.65rem, 3vw, 2.45rem);
+  line-height: .9;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 0 0 14px rgba(0,207,232,.85);
+}
+
+.logo-text strong span {
+  color: var(--mint);
+  font-style: italic;
+}
+
+.logo-text small {
+  color: var(--foam);
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-size: .72rem;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+nav a {
+  text-decoration: none;
+  font-weight: 800;
+  color: var(--foam);
+  opacity: .95;
+}
+
+nav a:hover {
+  color: var(--mint);
+  text-shadow: 0 0 12px var(--mint);
+}
+
+.mission-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at center, rgba(0,207,232,.2), transparent 32%),
+    linear-gradient(180deg, #00354b, #001017);
+  animation: introExit .9s ease forwards;
+  animation-delay: 4.8s;
+}
+
+.water-bubbles::before,
+.water-bubbles::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.6) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(114,245,209,.4) 0 3px, transparent 4px);
+  background-size: 90px 90px, 135px 135px;
+  animation: bubbles 8s linear infinite;
+  opacity: .45;
+}
+
+.mission-box {
+  position: relative;
+  width: min(760px, 90vw);
+  text-align: center;
+  padding: 42px;
+  border: 1px solid rgba(233,251,255,.5);
+  border-radius: 28px;
+  background: rgba(2, 16, 24, .72);
+  box-shadow: 0 0 40px rgba(0,207,232,.24), inset 0 0 40px rgba(255,255,255,.08);
+}
+
+.mission-box h1 {
+  font-size: clamp(2.4rem, 7vw, 5.3rem);
+  margin: 10px 0;
+  color: var(--foam);
+  text-shadow: 0 0 12px var(--aqua), 0 0 34px var(--blue);
+}
+
+.eyebrow, .tag {
+  color: var(--mint);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 900;
+}
+
+.hero {
+  min-height: 82vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  align-items: center;
+  gap: 30px;
+  padding: 85px 6%;
+  overflow: hidden;
+}
+
+.foam-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 80%, rgba(233,251,255,.18) 0 70px, transparent 72px),
+    radial-gradient(circle at 60% 20%, rgba(233,251,255,.13) 0 50px, transparent 52px),
+    radial-gradient(circle at 80% 75%, rgba(114,245,209,.11) 0 90px, transparent 92px);
+  pointer-events: none;
+}
+
+.hero-content, .wash-card, .section { position: relative; z-index: 2; }
+
+.hero h1, .section h1 {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: .98;
+  max-width: 860px;
+  margin: 10px 0 20px;
+}
+
+.hero p, .section p { color: var(--muted); line-height: 1.7; }
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.btn {
+  display: inline-block;
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 22px;
+  background: linear-gradient(90deg, var(--foam), var(--aqua), var(--mint));
+  color: #00202b;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 0 22px rgba(0,207,232,.35);
+  transition: transform .2s, box-shadow .2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 34px rgba(114,245,209,.48);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--foam);
+  border: 1px solid rgba(233,251,255,.55);
+}
+
+.wash-card, .card, .booking-form {
+  background: var(--panel);
+  border: 1px solid rgba(233,251,255,.22);
+  box-shadow: 0 0 28px rgba(0,207,232,.12);
+  border-radius: 24px;
+}
+
+.wash-card { padding: 28px; }
+.wash-card li { margin: 12px 0; color: var(--muted); }
+
+.section { padding: 78px 6%; }
+
+.section h2 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  margin: 8px 0 24px;
+}
+
+.game-section {
+  background: linear-gradient(180deg, rgba(233,251,255,.08), rgba(0,207,232,.06));
+}
+
+.game-area {
+  position: relative;
+  height: 310px;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 2px solid rgba(233,251,255,.35);
+  background: linear-gradient(180deg, #76d7ff 0%, #bff7ff 48%, #09314a 49%, #061724 100%);
+  box-shadow: 0 0 35px rgba(0,207,232,.25);
+  outline: none;
+}
+
+.sunset-glow {
+  position: absolute;
+  right: 70px;
+  top: 34px;
+  width: 78px;
+  height: 78px;
+  background: radial-gradient(circle, var(--sun), rgba(255,224,138,.25), transparent 70%);
+  border-radius: 50%;
+}
+
+.city-silhouette {
+  position: absolute;
+  bottom: 74px;
+  left: 0;
+  width: 240%;
+  height: 95px;
+  background:
+    linear-gradient(to top, #042338 0 100%, transparent),
+    repeating-linear-gradient(90deg,
+      transparent 0 22px,
+      rgba(255,255,255,.18) 22px 25px,
+      transparent 25px 60px);
+  clip-path: polygon(
+    0 100%, 0 45%, 4% 45%, 4% 25%, 8% 25%, 8% 58%, 12% 58%, 12% 35%,
+    17% 35%, 17% 12%, 22% 12%, 22% 60%, 27% 60%, 27% 30%, 31% 30%,
+    31% 48%, 36% 48%, 36% 20%, 42% 20%, 42% 55%, 48% 55%, 48% 34%,
+    53% 34%, 53% 16%, 57% 16%, 57% 54%, 63% 54%, 63% 25%, 68% 25%,
+    68% 50%, 74% 50%, 74% 32%, 79% 32%, 79% 17%, 84% 17%, 84% 57%,
+    90% 57%, 90% 38%, 95% 38%, 95% 24%, 100% 24%, 100% 100%
+  );
+  animation: cityMove 13s linear infinite;
+}
+
+.road-line {
+  position: absolute;
+  bottom: 72px;
+  left: 0;
+  width: 100%;
+  height: 7px;
+  background: linear-gradient(90deg, transparent, var(--foam), transparent);
+  box-shadow: 0 0 14px var(--aqua);
+}
+
+.game-car {
+  position: absolute;
+  left: 80px;
+  bottom: 73px;
+  font-size: 52px;
+  transform: scaleX(1);
+  filter: drop-shadow(0 0 10px var(--aqua));
+  z-index: 5;
+}
+
+.game-car.jump {
+  animation: jump .62s ease-out;
+}
+
+.hurdle {
+  position: absolute;
+  right: -60px;
+  bottom: 76px;
+  width: 35px;
+  height: 48px;
+  border-radius: 8px 8px 3px 3px;
+  background: linear-gradient(180deg, #ff8a3d, #d94b15);
+  border: 3px solid #fff3d6;
+  animation: hurdleMove 2.15s linear infinite;
+  z-index: 4;
+}
+
+.score {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  font-weight: 900;
+  color: #00202b;
+  background: rgba(255,255,255,.72);
+  padding: 8px 13px;
+  border-radius: 999px;
+}
+
+.game-hint {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  font-weight: 900;
+  color: #00202b;
+  background: rgba(255,255,255,.72);
+  padding: 8px 13px;
+  border-radius: 999px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  padding: 24px;
+  min-height: 190px;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(114,245,209,.55);
+  box-shadow: 0 0 36px rgba(114,245,209,.18);
+}
+
+.card.featured { border-color: rgba(233,251,255,.55); }
+
+.price {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--mint);
+  font-weight: 900;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.image-card {
+  overflow: hidden;
+  border-radius: 24px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(233,251,255,.2);
+}
+
+.image-card img, .product img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.image-card h3 { padding: 0 18px 18px; }
+
+.booking-section {
+  background: linear-gradient(90deg, rgba(0,207,232,.08), rgba(114,245,209,.08));
+}
+
+.booking-form {
+  padding: 24px;
+  max-width: 900px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+input, select, textarea {
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(233,251,255,.25);
+  background: rgba(2,16,24,.58);
+  color: #fff;
+}
+
+textarea { min-height: 120px; resize: vertical; }
+
+.booking-output {
+  white-space: pre-wrap;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(2,16,24,.5);
+  border: 1px dashed rgba(114,245,209,.45);
+  display: none;
+}
+
+.contact { text-align: center; }
+
+.product img {
+  border-radius: 18px;
+  margin-bottom: 18px;
+  aspect-ratio: 1 / 1;
+}
+
+.shop-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+footer {
+  padding: 24px 6%;
+  text-align: center;
+  color: var(--muted);
+  background: rgba(2,16,24,.72);
+}
+
+@keyframes jump {
+  0%, 100% { bottom: 73px; }
+  45% { bottom: 158px; }
+}
+
+@keyframes hurdleMove {
+  from { right: -60px; }
+  to { right: calc(100% + 80px); }
+}
+
+@keyframes cityMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes bubbles {
+  from { transform: translateY(0); }
+  to { transform: translateY(-220px); }
+}
+
+@keyframes introExit {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 700px) {
+  .site-header { align-items: flex-start; flex-direction: column; }
+  .brand-logo { transform: scale(1); }
+  .grid, .gallery, .form-row, .shop-grid { grid-template-columns: 1fr; }
+  .game-hint { display: none; }
+}

@@ -1,47 +1,69 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Shop — MTL Lavage</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MTLLavage Shop</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1>MTL Lavage</h1>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="index.html#services">Services</a>
-        <a href="shop.html">Shop</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
+
+<header class="site-header">
+  <a href="index.html" class="brand-logo" aria-label="MTLLavage Home">
+    <span class="logo-icon">🚘</span>
+    <span class="logo-text">
+      <strong>MTL<span>LAVAGE</span></strong>
+      <small>Shop & Car Care</small>
+    </span>
+  </a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#booking">Booking</a>
+    <a href="shop.html">Shop</a>
+  </nav>
+</header>
+
+<main>
+  <section class="section shop-hero">
+    <p class="tag">Car Care Products</p>
+    <h1>MTLLavage Shop</h1>
+    <p>Relatable product visuals are included and ready for your real merchandise, prices and checkout links.</p>
+  </section>
+
+  <section class="section">
+    <div class="grid shop-grid">
+      <article class="card product">
+        <img src="assets/product-shampoo.jpg" alt="Premium car shampoo bottle">
+        <h3>Premium Car Shampoo</h3>
+        <p>Foam-rich wash formula for a safe exterior clean.</p>
+        <span class="price">$19.99</span>
+        <button class="btn">Coming Soon</button>
+      </article>
+
+      <article class="card product">
+        <img src="assets/product-towels.jpg" alt="Microfiber towels pack">
+        <h3>Microfiber Towels Pack</h3>
+        <p>Soft towel pack for drying, buffing and interior wipe-downs.</p>
+        <span class="price">$14.99</span>
+        <button class="btn">Coming Soon</button>
+      </article>
+
+      <article class="card product">
+        <img src="assets/product-detail-spray.jpg" alt="Quick detail spray product">
+        <h3>Quick Detail Spray</h3>
+        <p>Fast gloss booster for a freshly detailed look.</p>
+        <span class="price">$16.99</span>
+        <button class="btn">Coming Soon</button>
+      </article>
     </div>
-  </header>
+  </section>
+</main>
 
-  <main class="container">
-    <h2>Shop — Detailing Products</h2>
-    <p>High-quality products we use and recommend.</p>
+<footer>
+  <p>© 2026 MTLLavage Shop</p>
+</footer>
 
-    <div class="products-grid" id="products">
-      <!-- Products populated by script.js -->
-    </div>
-
-    <div id="cart" class="cart">
-      <h3>Cart</h3>
-      <div id="cart-items"></div>
-      <div class="cart-footer">
-        <strong>Total: $<span id="cart-total">0</span></strong>
-        <button id="checkout" class="btn">Checkout</button>
-      </div>
-    </div>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">© MTL Lavage — Shop</div>
-  </footer>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
