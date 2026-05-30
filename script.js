@@ -149,41 +149,57 @@ if(gameArea){
   gameArea.addEventListener('click',hideMobileHint);
 }
 
-/* Level 9 GitHub Pages-safe mini-game sound.
-   Uses original browser-generated audio, so no external audio file is needed. */
+/* Level 10 reliable mini-game audio.
+   Original no-copyright Web Audio. No audio files required.
+   Click "Sound Off" or tap the game area once to enable sound. */
 const musicToggle = document.getElementById("musicToggle");
 
-let audioCtx = null;
-let musicEnabled = false;
-let musicTimer = null;
-let masterGain = null;
+let mtllAudioCtx = null;
+let mtllSoundEnabled = false;
+let mtllMusicLoop = null;
+let mtllStep = 0;
+let mtllMaster = null;
 
-const softNotes = [261.63, 329.63, 392.00, 493.88, 392.00, 329.63, 293.66, 349.23];
-let noteIndex = 0;
+const mtllMelody = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 392.00, 493.88];
 
-function ensureAudioContext() {
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) return null;
+function initMtllAudio() {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return null;
 
-  if (!audioCtx) {
-    audioCtx = new AudioContextClass();
-    masterGain = audioCtx.createGain();
-    masterGain.gain.value = 0.055;
-    masterGain.connect(audioCtx.destination);
+  if (!mtllAudioCtx) {
+    mtllAudioCtx = new AC();
+    mtllMaster = mtllAudioCtx.createGain();
+    mtllMaster.gain.value = 0.06;
+    mtllMaster.connect(mtllAudioCtx.destination);
   }
 
-  if (audioCtx.state === "suspended") {
-    audioCtx.resume();
+  if (mtllAudioCtx.state === "suspended") {
+    mtllAudioCtx.resume();
   }
 
-  return audioCtx;
+  return mtllAudioCtx;
 }
 
-function playSoftNote(freq) {
-  const ctx = ensureAudioContext();
-  if (!ctx || !masterGain) return;
+function showSoundToast(text) {
+  if (!gameArea) return;
+  const old = gameArea.querySelector(".sound-toast");
+  if (old) old.remove();
+
+  const toast = document.createElement("div");
+  toast.className = "sound-toast";
+  toast.textContent = text;
+  gameArea.appendChild(toast);
+  setTimeout(() => toast.remove(), 1200);
+}
+
+function playMusicNote() {
+  const ctx = initMtllAudio();
+  if (!ctx || !mtllMaster || !mtllSoundEnabled) return;
 
   const now = ctx.currentTime;
+  const freq = mtllMelody[mtllStep % mtllMelody.length];
+  mtllStep++;
+
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
 
@@ -191,86 +207,90 @@ function playSoftNote(freq) {
   osc.frequency.setValueAtTime(freq, now);
 
   gain.gain.setValueAtTime(0.0001, now);
-  gain.gain.exponentialRampToValueAtTime(0.16, now + 0.035);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+  gain.gain.linearRampToValueAtTime(0.12, now + 0.03);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.48);
 
   osc.connect(gain);
-  gain.connect(masterGain);
-
+  gain.connect(mtllMaster);
   osc.start(now);
-  osc.stop(now + 0.45);
+  osc.stop(now + 0.5);
 }
 
-function startGeneratedMusic() {
-  const ctx = ensureAudioContext();
-  if (!ctx || musicTimer) return;
-
-  playSoftNote(softNotes[noteIndex % softNotes.length]);
-
-  musicTimer = setInterval(() => {
-    playSoftNote(softNotes[noteIndex % softNotes.length]);
-    noteIndex += 1;
-  }, 620);
+function startMtllMusic() {
+  initMtllAudio();
+  if (mtllMusicLoop) return;
+  playMusicNote();
+  mtllMusicLoop = setInterval(playMusicNote, 620);
 }
 
-function stopGeneratedMusic() {
-  if (musicTimer) {
-    clearInterval(musicTimer);
-    musicTimer = null;
+function stopMtllMusic() {
+  if (mtllMusicLoop) {
+    clearInterval(mtllMusicLoop);
+    mtllMusicLoop = null;
   }
 }
 
-function toggleMusic() {
-  musicEnabled = !musicEnabled;
+function enableMtllSound() {
+  mtllSoundEnabled = true;
+  if (musicToggle) musicToggle.textContent = "🔊 Sound On";
+  startMtllMusic();
+}
 
-  if (musicEnabled) {
-    if (musicToggle) musicToggle.textContent = "🔊 Music On";
-    startGeneratedMusic();
+function disableMtllSound() {
+  mtllSoundEnabled = false;
+  if (musicToggle) musicToggle.textContent = "🔈 Sound Off";
+  stopMtllMusic();
+}
+
+function toggleMtllSound() {
+  initMtllAudio();
+  if (mtllSoundEnabled) {
+    disableMtllSound();
+    showSoundToast("Sound Off");
   } else {
-    if (musicToggle) musicToggle.textContent = "🎵 Tap Music";
-    stopGeneratedMusic();
+    enableMtllSound();
+    showSoundToast("Sound On");
   }
 }
 
 function playPotholeHitSound() {
-  const ctx = ensureAudioContext();
-  if (!ctx) return;
+  const ctx = initMtllAudio();
+  if (!ctx || !mtllSoundEnabled) return;
 
   const now = ctx.currentTime;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
 
-  osc.type = "triangle";
-  osc.frequency.setValueAtTime(95, now);
-  osc.frequency.exponentialRampToValueAtTime(38, now + 0.28);
+  osc.type = "sawtooth";
+  osc.frequency.setValueAtTime(120, now);
+  osc.frequency.exponentialRampToValueAtTime(45, now + 0.22);
 
-  gain.gain.setValueAtTime(0.22, now);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+  gain.gain.setValueAtTime(0.18, now);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
 
   osc.connect(gain);
   gain.connect(ctx.destination);
 
   osc.start(now);
-  osc.stop(now + 0.36);
+  osc.stop(now + 0.3);
 }
 
 if (musicToggle) {
-  musicToggle.addEventListener("click", (event) => {
+  musicToggle.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
     event.stopPropagation();
-    toggleMusic();
+    toggleMtllSound();
+  });
+}
+
+if (gameArea) {
+  gameArea.addEventListener("pointerdown", () => {
+    initMtllAudio();
   });
 }
 
 document.addEventListener("keydown", (event) => {
   if (event.code === "Space") {
-    ensureAudioContext();
-    if (musicEnabled) startGeneratedMusic();
+    initMtllAudio();
   }
 });
-
-if (gameArea) {
-  gameArea.addEventListener("click", () => {
-    ensureAudioContext();
-    if (musicEnabled) startGeneratedMusic();
-  });
-}
