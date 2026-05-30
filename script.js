@@ -149,35 +149,109 @@ if(gameArea){
   gameArea.addEventListener('click',hideMobileHint);
 }
 
-
-/* Level 7 mini-game music */
-const minigameMusic = document.getElementById("minigameMusic");
+/* Level 9 GitHub Pages-safe mini-game sound.
+   Uses original browser-generated audio, so no external audio file is needed. */
 const musicToggle = document.getElementById("musicToggle");
-let musicStarted = false;
-let musicMuted = true;
 
-function startGameMusic() {
-  if (!minigameMusic || musicMuted) return;
-  minigameMusic.volume = 0.10;
-  minigameMusic.play().then(() => {
-    musicStarted = true;
-  }).catch(() => {});
+let audioCtx = null;
+let musicEnabled = false;
+let musicTimer = null;
+let masterGain = null;
+
+const softNotes = [261.63, 329.63, 392.00, 493.88, 392.00, 329.63, 293.66, 349.23];
+let noteIndex = 0;
+
+function ensureAudioContext() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return null;
+
+  if (!audioCtx) {
+    audioCtx = new AudioContextClass();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.055;
+    masterGain.connect(audioCtx.destination);
+  }
+
+  if (audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+
+  return audioCtx;
+}
+
+function playSoftNote(freq) {
+  const ctx = ensureAudioContext();
+  if (!ctx || !masterGain) return;
+
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(freq, now);
+
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(0.16, now + 0.035);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+
+  osc.connect(gain);
+  gain.connect(masterGain);
+
+  osc.start(now);
+  osc.stop(now + 0.45);
+}
+
+function startGeneratedMusic() {
+  const ctx = ensureAudioContext();
+  if (!ctx || musicTimer) return;
+
+  playSoftNote(softNotes[noteIndex % softNotes.length]);
+
+  musicTimer = setInterval(() => {
+    playSoftNote(softNotes[noteIndex % softNotes.length]);
+    noteIndex += 1;
+  }, 620);
+}
+
+function stopGeneratedMusic() {
+  if (musicTimer) {
+    clearInterval(musicTimer);
+    musicTimer = null;
+  }
 }
 
 function toggleMusic() {
-  if (!minigameMusic || !musicToggle) return;
+  musicEnabled = !musicEnabled;
 
-  musicMuted = !musicMuted;
-  minigameMusic.muted = musicMuted;
-
-  if (musicMuted) {
-    minigameMusic.pause();
-    musicStarted = false;
-    musicToggle.textContent = "🔇 Music";
+  if (musicEnabled) {
+    if (musicToggle) musicToggle.textContent = "🔊 Music On";
+    startGeneratedMusic();
   } else {
-    musicToggle.textContent = "🔊 Music";
-    startGameMusic();
+    if (musicToggle) musicToggle.textContent = "🎵 Tap Music";
+    stopGeneratedMusic();
   }
+}
+
+function playPotholeHitSound() {
+  const ctx = ensureAudioContext();
+  if (!ctx) return;
+
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = "triangle";
+  osc.frequency.setValueAtTime(95, now);
+  osc.frequency.exponentialRampToValueAtTime(38, now + 0.28);
+
+  gain.gain.setValueAtTime(0.22, now);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(now);
+  osc.stop(now + 0.36);
 }
 
 if (musicToggle) {
@@ -188,26 +262,15 @@ if (musicToggle) {
 }
 
 document.addEventListener("keydown", (event) => {
-  if (event.code === "Space" && minigameMusic && !musicMuted && !musicStarted) {
-    startGameMusic();
+  if (event.code === "Space") {
+    ensureAudioContext();
+    if (musicEnabled) startGeneratedMusic();
   }
 });
 
 if (gameArea) {
   gameArea.addEventListener("click", () => {
-    if (minigameMusic && !musicMuted && !musicStarted) {
-      startGameMusic();
-    }
+    ensureAudioContext();
+    if (musicEnabled) startGeneratedMusic();
   });
-}
-
-
-/* Level 8 pothole hit sound */
-const potholeHitSound = document.getElementById("potholeHitSound");
-
-function playPotholeHitSound() {
-  if (!potholeHitSound) return;
-  potholeHitSound.volume = 0.45;
-  potholeHitSound.currentTime = 0;
-  potholeHitSound.play().catch(() => {});
 }

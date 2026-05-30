@@ -37,3 +37,11 @@ Replace generated images in /assets with real client photos whenever ready.
 - Reduced music volume.
 - Made potholes smaller.
 - Made jump higher, longer, and easier for mobile players.
+
+
+## Level 9 GitHub Pages audio fix
+- Replaced audio-file playback with browser-generated Web Audio music.
+- This avoids GitHub Pages audio file loading/path/MIME issues.
+- Music starts after the user taps the Music button.
+- Pothole hit sound is also browser-generated.
+- Jump height adjusted to a middle-ground balance.

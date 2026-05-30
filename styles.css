@@ -695,3 +695,25 @@ main > .game-section:first-child {
     36%, 64% { bottom: 205px; }
   }
 }
+
+
+/* Level 9: GitHub Pages audio fix + middle-ground jump */
+.game-car.jump {
+  animation: jumpBalanced .72s ease-out !important;
+}
+
+@keyframes jumpBalanced {
+  0%, 100% { bottom: 73px; }
+  45% { bottom: 150px; }
+}
+
+@media (max-width: 768px) {
+  .game-car.jump {
+    animation: jumpBalancedMobile .80s ease-out !important;
+  }
+
+  @keyframes jumpBalancedMobile {
+    0%, 100% { bottom: 73px; }
+    45% { bottom: 160px; }
+  }
+}
